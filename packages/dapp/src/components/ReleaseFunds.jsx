@@ -10,18 +10,19 @@ import { BigNumber, utils } from 'ethers';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Web3Context } from '../context/Web3Context';
-import {
-  getHexChainId,
-  getTokenInfo,
-  getTxLink,
-  logError,
-} from '../utils/helpers';
+import { getHexChainId, getTxLink, logError } from '../utils/helpers';
 import { release } from '../utils/invoice';
 
 export const ReleaseFunds = ({ invoice, balance, close }) => {
   const [loading, setLoading] = useState(false);
   const { chainId, provider } = useContext(Web3Context);
-  const { network, currentMilestone, amounts, address, token } = invoice;
+  const {
+    network,
+    currentMilestone,
+    amounts,
+    address,
+    tokenMetadata: { symbol, decimals },
+  } = invoice;
 
   let amount = BigNumber.from(amounts[currentMilestone]);
   amount =
@@ -29,7 +30,6 @@ export const ReleaseFunds = ({ invoice, balance, close }) => {
       ? balance
       : amounts[currentMilestone];
 
-  const { decimals, symbol } = getTokenInfo(chainId, token);
   const [transaction, setTransaction] = useState();
   const buttonSize = useBreakpointValue({ base: 'md', md: 'lg' });
 

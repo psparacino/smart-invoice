@@ -3,12 +3,10 @@ import { utils } from 'ethers';
 import React, { useContext } from 'react';
 
 import { CreateContext } from '../context/CreateContext';
-import { Web3Context } from '../context/Web3Context';
 import { AccountLink } from '../shared/AccountLink';
-import { getDateString, getTokenInfo } from '../utils/helpers';
+import { getDateString } from '../utils/helpers';
 
 export const FormConfirmation = ({ display }) => {
-  const { chainId } = useContext(Web3Context);
   const {
     projectName,
     projectDescription,
@@ -21,10 +19,8 @@ export const FormConfirmation = ({ display }) => {
     arbitrationProvider,
     milestones,
     paymentDue,
-    paymentToken,
+    paymentTokenMetadata: { decimals, symbol },
   } = useContext(CreateContext);
-  const tokenData = getTokenInfo(chainId, paymentToken);
-  const { decimals, symbol } = tokenData;
   return (
     <VStack
       w="100%"

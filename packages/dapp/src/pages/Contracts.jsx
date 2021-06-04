@@ -1,21 +1,48 @@
 import { Heading, Link, Text, useBreakpointValue } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { CONFIG } from '../config';
 import { Container } from '../shared/Container';
+import { Loader } from '../components/Loader';
 import {
   getAccountString,
   getAddressLink,
   getInvoiceFactoryAddress,
-  getTokenInfo,
-  getTokens,
 } from '../utils/helpers';
+import { getTokens } from '../graphql/tokens';
 
 const { NETWORK_CONFIG } = CONFIG;
 const networks = Object.keys(NETWORK_CONFIG);
 
 export const Contracts = () => {
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
+  const [loading, setLoading] = useState(false);
+  const [tokens, setTokens] = useState({});
+
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true);
+      const tokenLists = await Promise.all(
+        networks.map(chainId => getTokens(chainId)),
+      );
+      let tokensMap = {};
+      networks.forEach((chainId, index) => {
+        tokensMap[chainId] = tokenLists[index];
+      });
+      setTokens(tokensMap);
+      setLoading(false);
+    };
+    load();
+  });
+
+  if (loading) {
+    return (
+      <Container overlay>
+        <Loader size="80" />
+      </Container>
+    );
+  }
+
   return (
     <Container overlay color="white">
       <Heading
@@ -31,7 +58,7 @@ export const Contracts = () => {
 
       {networks.map(chainId => {
         const INVOICE_FACTORY = getInvoiceFactoryAddress(chainId);
-        const TOKENS = getTokens(chainId);
+        const TOKENS = tokens[chainId];
         return (
           <>
             <Text textAlign="center">NETWORK CHAIN ID: {chainId}</Text>
@@ -47,15 +74,15 @@ export const Contracts = () => {
                   : INVOICE_FACTORY}
               </Link>
             </Text>
-            {TOKENS.map(token => (
-              <Text textAlign="center" key={token}>
-                {`ERC20 TOKEN ${getTokenInfo(chainId, token).symbol}: `}
+            {TOKENS.map(({ address, symbol }) => (
+              <Text textAlign="center" key={address}>
+                {`ERC20 TOKEN ${symbol}: `}
                 <Link
-                  href={getAddressLink(chainId, token)}
+                  href={getAddressLink(chainId, address)}
                   isExternal
                   color="red.500"
                 >
-                  {isSmallScreen ? getAccountString(token) : token}
+                  {isSmallScreen ? getAccountString(address) : address}
                 </Link>
               </Text>
             ))}

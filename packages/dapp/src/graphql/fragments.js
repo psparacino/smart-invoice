@@ -1,5 +1,14 @@
 import gql from 'fake-tag';
 
+export const TokenDetails = gql`
+  fragment TokenDetails on Token {
+    address: id
+    name
+    symbol
+    decimals
+  }
+`;
+
 export const InvoiceDetails = gql`
   fragment InvoiceDetails on Invoice {
     id
@@ -51,6 +60,10 @@ export const InvoiceDetails = gql`
       providerAward
       resolutionFee
       timestamp
+    }
+    tokenMetadata {
+      decimals
+      symbol
     }
   }
 `;

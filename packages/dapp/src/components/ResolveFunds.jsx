@@ -14,19 +14,19 @@ import React, { useCallback, useContext, useState } from 'react';
 
 import { Web3Context } from '../context/Web3Context';
 import { OrderedTextarea } from '../shared/OrderedInput';
-import {
-  getHexChainId,
-  getTokenInfo,
-  getTxLink,
-  logError,
-} from '../utils/helpers';
+import { getHexChainId, getTxLink, logError } from '../utils/helpers';
 import { resolve } from '../utils/invoice';
 import { uploadDisputeDetails } from '../utils/ipfs';
 
 export const ResolveFunds = ({ invoice, balance, close }) => {
-  const { network, address, resolutionRate, token, isLocked } = invoice;
+  const {
+    network,
+    address,
+    resolutionRate,
+    isLocked,
+    tokenMetadata: { symbol, decimals },
+  } = invoice;
   const { chainId, provider } = useContext(Web3Context);
-  const { decimals, symbol } = getTokenInfo(chainId, token);
   const [loading, setLoading] = useState(false);
   const [transaction, setTransaction] = useState();
 

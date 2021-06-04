@@ -13,8 +13,6 @@ import {
   resolverInfo,
   resolvers,
   rpcUrls,
-  tokenInfo,
-  tokens,
   wrappedNativeToken,
 } from './constants';
 
@@ -55,14 +53,6 @@ export const getResolvers = chainId => resolvers[chainId] || resolvers[4];
 
 export const getResolverInfo = (chainId, resolver) =>
   (resolverInfo[chainId] || resolverInfo[4])[resolver];
-
-export const getTokens = chainId => tokens[chainId] || tokens[4];
-
-export const getTokenInfo = (chainId, token) =>
-  (tokenInfo[chainId] || tokenInfo[4])[token] || {
-    decimals: 18,
-    symbol: 'UNKNOWN',
-  };
 
 export const getWrappedNativeToken = chainId =>
   wrappedNativeToken[chainId] || wrappedNativeToken[4];

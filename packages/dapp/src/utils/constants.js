@@ -63,16 +63,6 @@ export const graphUrls = {
   100: `https://api.thegraph.com/subgraphs/name/${NETWORK_CONFIG[100].SUBGRAPH}`,
 };
 
-export const tokens = {
-  4: Object.keys(NETWORK_CONFIG[4].TOKENS),
-  100: Object.keys(NETWORK_CONFIG[100].TOKENS),
-};
-
-export const tokenInfo = {
-  4: NETWORK_CONFIG[4].TOKENS,
-  100: NETWORK_CONFIG[100].TOKENS,
-};
-
 export const resolvers = {
   4: Object.keys(NETWORK_CONFIG[4].RESOLVERS),
   100: Object.keys(NETWORK_CONFIG[100].RESOLVERS),

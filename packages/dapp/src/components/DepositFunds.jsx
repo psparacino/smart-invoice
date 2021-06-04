@@ -25,7 +25,6 @@ import { balanceOf } from '../utils/erc20';
 import {
   getHexChainId,
   getNativeTokenSymbol,
-  getTokenInfo,
   getTxLink,
   getWrappedNativeToken,
   logError,
@@ -47,11 +46,17 @@ export const DepositFunds = ({ invoice, deposited, due }) => {
   const { chainId, provider, account } = useContext(Web3Context);
   const NATIVE_TOKEN_SYMBOL = getNativeTokenSymbol(chainId);
   const WRAPPED_NATIVE_TOKEN = getWrappedNativeToken(chainId);
-  const { address, token, network, amounts, currentMilestone } = invoice;
+  const {
+    address,
+    token,
+    network,
+    amounts,
+    currentMilestone,
+    tokenMetadata: { symbol, decimals },
+  } = invoice;
   const [paymentType, setPaymentType] = useState(0);
   const [amount, setAmount] = useState(BigNumber.from(0));
   const [amountInput, setAmountInput] = useState('');
-  const { decimals, symbol } = getTokenInfo(chainId, token);
   const [loading, setLoading] = useState(false);
   const [transaction, setTransaction] = useState();
   const buttonSize = useBreakpointValue({ base: 'md', md: 'lg' });

@@ -9,22 +9,21 @@ import {
   getResolverInfo,
   getResolvers,
   getResolverString,
-  getTokenInfo,
-  getTokens,
   isKnownResolver,
 } from '../utils/helpers';
 import { getResolutionRateFromFactory } from '../utils/invoice';
+import { getTokens } from '../graphql/tokens';
 
 export const PaymentDetailsForm = ({ display }) => {
   const { chainId, provider } = useContext(Web3Context);
   const RESOLVERS = getResolvers(chainId);
-  const TOKENS = getTokens(chainId);
+  const [tokens, setTokens] = useState([]);
+
   const {
     clientAddress,
     setClientAddress,
     paymentAddress,
     setPaymentAddress,
-    paymentToken,
     setPaymentToken,
     paymentDue,
     setPaymentDue,
@@ -35,8 +34,29 @@ export const PaymentDetailsForm = ({ display }) => {
     setPayments,
     termsAccepted,
     setTermsAccepted,
+    paymentTokenMetadata: { decimals, symbol },
+    setPaymentTokenMetadata,
   } = useContext(CreateContext);
-  const { decimals, symbol } = getTokenInfo(chainId, paymentToken);
+
+  useEffect(() => {
+    const load = async () => {
+      const allTokens = await getTokens(chainId);
+      setTokens(allTokens);
+      setPaymentTokenIndex(0);
+    };
+    load();
+  }, []);
+
+  const [paymentTokenIndex, setPaymentTokenIndex] = useState(-1);
+  useEffect(() => {
+    if (paymentTokenIndex >= 0 && paymentTokenIndex < tokens.length) {
+      const token = tokens[paymentTokenIndex];
+      const { address } = token;
+      setPaymentToken(address);
+      setPaymentTokenMetadata(token);
+    }
+  }, [paymentTokenIndex, tokens]);
+
   const [arbitrationProviderType, setArbitrationProviderType] = useState('0');
   const [paymentDueInput, setPaymentDueInput] = useState('');
 
@@ -101,15 +121,17 @@ export const PaymentDetailsForm = ({ display }) => {
           }}
         />
         <OrderedSelect
-          value={paymentToken}
-          setValue={setPaymentToken}
+          value={paymentTokenIndex}
+          setValue={setPaymentTokenIndex}
           label="Payment Token"
         >
-          {TOKENS.map(token => (
-            <option value={token} key={token}>
-              {getTokenInfo(chainId, token).symbol}
-            </option>
-          ))}
+          {tokens.length > 0
+            ? tokens.map(({ address, symbol }, index) => (
+                <option value={index} key={address}>
+                  {symbol}
+                </option>
+              ))
+            : null}
         </OrderedSelect>
         <OrderedInput
           gridArea={{ base: '2/1/2/span 2', sm: 'auto/auto/auto/auto' }}

@@ -41,7 +41,6 @@ import {
   getAddressLink,
   getDateString,
   getIpfsLink,
-  getTokenInfo,
   getTxLink,
   logError,
 } from '../utils/helpers';
@@ -116,18 +115,17 @@ export const ViewInvoice = ({
     currentMilestone,
     amounts,
     total,
-    token,
     released,
     isLocked,
     deposits,
     releases,
     disputes,
     resolutions,
+    tokenMetadata: { decimals, symbol },
   } = invoice;
 
   const isClient = account.toLowerCase() === client;
   const isResolver = account.toLowerCase() === resolver.toLowerCase();
-  const { decimals, symbol } = getTokenInfo(invoiceChainId, token);
   const deposited = BigNumber.from(released).add(balance);
   const due = deposited.gte(total)
     ? BigNumber.from(0)

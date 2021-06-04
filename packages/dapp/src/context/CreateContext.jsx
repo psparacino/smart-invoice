@@ -8,12 +8,7 @@ import React, {
   useState,
 } from 'react';
 
-import {
-  getResolvers,
-  getWrappedNativeToken,
-  isValidLink,
-  logError,
-} from '../utils/helpers';
+import { getResolvers, isValidLink, logError } from '../utils/helpers';
 import { register } from '../utils/invoice';
 import { uploadMetadata } from '../utils/ipfs';
 import { Web3Context } from './Web3Context';
@@ -25,7 +20,6 @@ export const CreateContext = createContext();
 export const CreateContextProvider = ({ children }) => {
   const { provider, chainId } = useContext(Web3Context);
   const RESOLVERS = getResolvers(chainId);
-  const WRAPPED_NATIVE_TOKEN = getWrappedNativeToken(chainId);
 
   // project details
   const [projectName, setProjectName] = useState('');
@@ -40,7 +34,8 @@ export const CreateContextProvider = ({ children }) => {
   const [clientAddress, setClientAddress] = useState('');
   const [paymentAddress, setPaymentAddress] = useState('');
   const [paymentDue, setPaymentDue] = useState(BigNumber.from(0));
-  const [paymentToken, setPaymentToken] = useState(WRAPPED_NATIVE_TOKEN);
+  const [paymentToken, setPaymentToken] = useState('');
+  const [paymentTokenMetadata, setPaymentTokenMetadata] = useState({});
   const [milestones, setMilestones] = useState('1');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [arbitrationProvider, setArbitrationProvider] = useState(RESOLVERS[0]);
@@ -225,6 +220,9 @@ export const CreateContextProvider = ({ children }) => {
         nextStepEnabled,
         goBackHandler,
         nextStepHandler,
+        // tokenMetadata
+        paymentTokenMetadata,
+        setPaymentTokenMetadata,
       }}
     >
       {children}

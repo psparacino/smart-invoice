@@ -18,7 +18,6 @@ import {
   getHexChainId,
   getResolverInfo,
   getResolverString,
-  getTokenInfo,
   getTxLink,
   isKnownResolver,
   logError,
@@ -29,8 +28,13 @@ import { Loader } from './Loader';
 
 export const LockFunds = ({ invoice, balance }) => {
   const { chainId, provider } = useContext(Web3Context);
-  const { network, address, resolver, token, resolutionRate } = invoice;
-  const { decimals, symbol } = getTokenInfo(chainId, token);
+  const {
+    network,
+    address,
+    resolver,
+    resolutionRate,
+    tokenMetadata: { symbol, decimals },
+  } = invoice;
   const [disputeReason, setDisputeReason] = useState('');
 
   const fee = `${utils.formatUnits(
