@@ -13,6 +13,7 @@ export const chainIds = {
   rinkeby: 4,
   goerli: 5,
   kovan: 42,
+  sepolia: 11155111,
 };
 
 export const hexChainIds = {
@@ -33,6 +34,7 @@ export const networkLabels = {
   56: 'BSC',
   77: 'Sokol',
   137: 'Matic',
+  11155111: 'Sepolia',
 };
 
 export const networkNames = {
@@ -41,6 +43,7 @@ export const networkNames = {
   5: 'Goerli Testnet',
   42: 'Kovan Testnet',
   100: 'Gnosis Chain',
+  11155111: 'Sepolia Chain',
 };
 
 export const rpcUrls = {
@@ -49,6 +52,7 @@ export const rpcUrls = {
   5: `https://goerli.infura.io/v3/${INFURA_ID}`,
   42: `https://kovan.infura.io/v3/${INFURA_ID}`,
   100: 'https://rpc.xdaichain.com',
+  11155111: `https://sepolia.infura.io/v3/${INFURA_ID}`,
 };
 
 export const explorerUrls = {
@@ -57,6 +61,7 @@ export const explorerUrls = {
   5: 'https://goerli.etherscan.io/',
   42: 'https://kovan.etherscan.io',
   100: 'https://blockscout.com/poa/xdai',
+  11155111: 'https://sepolia.etherscan.io',
 };
 
 export const nativeSymbols = {
@@ -65,6 +70,7 @@ export const nativeSymbols = {
   5: 'ETH',
   42: 'ETH',
   100: 'XDAI',
+  11155111: 'ETH',
 };
 
 export const graphUrls = {
@@ -72,6 +78,7 @@ export const graphUrls = {
   4: `https://api.thegraph.com/subgraphs/name/${NETWORK_CONFIG[4].SUBGRAPH}`,
   5: `https://api.thegraph.com/subgraphs/name/${NETWORK_CONFIG[5].SUBGRAPH}`,
   100: `https://api.thegraph.com/subgraphs/name/${NETWORK_CONFIG[100].SUBGRAPH}`,
+  11155111: `https://api.thegraph.com/subgraphs/name/${NETWORK_CONFIG[11155111].SUBGRAPH}`,
 };
 
 export const resolvers = {
@@ -79,12 +86,14 @@ export const resolvers = {
   4: Object.keys(NETWORK_CONFIG[4].RESOLVERS),
   5: Object.keys(NETWORK_CONFIG[5].RESOLVERS),
   100: Object.keys(NETWORK_CONFIG[100].RESOLVERS),
+  11155111: Object.keys(NETWORK_CONFIG[11155111].RESOLVERS),
 };
 
 export const resolverInfo = {
   1: NETWORK_CONFIG[1].RESOLVERS,
   4: NETWORK_CONFIG[4].RESOLVERS,
   100: NETWORK_CONFIG[100].RESOLVERS,
+  11155111: NETWORK_CONFIG[11155111].RESOLVERS,
 };
 
 export const wrappedNativeToken = {
@@ -92,6 +101,7 @@ export const wrappedNativeToken = {
   4: NETWORK_CONFIG[4].WRAPPED_NATIVE_TOKEN,
   5: NETWORK_CONFIG[5].WRAPPED_NATIVE_TOKEN,
   100: NETWORK_CONFIG[100].WRAPPED_NATIVE_TOKEN,
+  11155111: NETWORK_CONFIG[11155111].WRAPPED_NATIVE_TOKEN,
 };
 
 export const invoiceFactory = {
@@ -99,6 +109,7 @@ export const invoiceFactory = {
   4: NETWORK_CONFIG[4].INVOICE_FACTORY,
   5: NETWORK_CONFIG[5].INVOICE_FACTORY,
   100: NETWORK_CONFIG[100].INVOICE_FACTORY,
+  11155111: NETWORK_CONFIG[11155111].INVOICE_FACTORY,
 };
 
 export const SUPPORTED_NETWORKS = Object.keys(NETWORK_CONFIG).map(n =>

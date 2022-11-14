@@ -51,6 +51,10 @@ module.exports = {
       url: `https://goerli.infura.io/v3/${INFURA_PROJECT_ID}`,
       accounts: [`0x${PRIVATE_KEY}`],
     },
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_PROJECT_ID}`,
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
     ganache: {
       url: "http://127.0.0.1:8555",
       defaultBalanceEther: 1000,
