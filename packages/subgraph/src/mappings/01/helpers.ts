@@ -50,6 +50,8 @@ class InvoiceObject {
   projectAgreement: Array<Agreement>;
   startDate: BigInt;
   endDate: BigInt;
+  invoiceType: String;
+  version: BigInt;
 
   constructor() {
     this.client = zeroAddress;
@@ -71,6 +73,8 @@ class InvoiceObject {
     this.projectAgreement = new Array<Agreement>();
     this.startDate = BigInt.fromI32(0);
     this.endDate = BigInt.fromI32(0);
+    this.invoiceType = '';
+    this.version = BigInt.fromI32(0);
   }
 }
 
