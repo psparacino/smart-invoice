@@ -154,10 +154,10 @@ export const isValidLink = url => {
   return isValidURL(url);
 };
 
-export const getChainId = network => chainIds[network] || chainIds.rinkeby;
+export const getChainId = network => chainIds[network] || chainIds.goerli;
 
 export const getHexChainId = network =>
-  hexChainIds[network] || hexChainIds.rinkeby;
+  hexChainIds[network] || hexChainIds.goerli;
 
 export const getNetworkLabel = chainId => networkLabels[chainId] || 'unknown';
 
